@@ -6,8 +6,5 @@
 python -m venv venv 
 Windows: source venv/Scripts/activate 
 Linux: source venv/bin/activate
-
-Manter registros das versões de bibliotecas usadas (opcinal):
-pip freeze > requirements.txt
-pip install -r requirements.txt 
 ```
+
