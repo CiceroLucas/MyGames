@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}MyGames{% endblock %}
+
+{% block content %}
+<div class="offset-1 col-10 list-div">
+    <h1>My Games</h1>
+    <a id="add-link" href="newgame/">
+    <div class="col-2 add-div">
+        <i class="fas fa-plus"></i>Add Game
+    </div>
+    </a>   
+    <div class="col-9 search-div">
+        <form method="GET" id="search-form">
+            <div class="input-group rounded">
+                <input class="form-control" type="text" id="search" name="search" placeholder="Digite o nome da jogo para buscar..." value="{{ request.GET.search }}">
+                <span class="input-group-text border-0" id="search-addon">
+                    <i class="fas fa-search" id="search-btn"></i>
+                </span>
+              </div>
+        </form>
+    </div>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="alert alert-{{message.tags}}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <ul class="list-group">
+        {% for game in games %}
+        <li class="list-group-item">
+            <a href="/game/{{game.id}}">{{game.title}}</a>
+            <a href="delete/{{game.id}}" class="delete-btn"><i class="fas fa-trash"></i></a>
+            <a href="edit/{{game.id}}"><i class="fas fa-edit"></i></a>
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="pagination">
+        <span class="step-links">
+            {% if games.has_previous %}
+                <a href="?page={{ games.previous_page_number }}"><i class="fas fa-arrow-left"></i></a>
+            {% endif %}
+
+            {% if games.paginator.num_pages %}
+            <span class="current">
+                {{ games.number}} de {{ games.paginator.num_pages }}
+            </span>
+            {% endif %}
+
+            {% if games.has_next %}
+                <a href="?page={{ games.next_page_number }}"><i class="fas fa-arrow-right"></i></a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+{% endblock %}
